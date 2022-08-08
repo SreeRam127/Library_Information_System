@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load mathfilters %}
+{% block content %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        body{
+    /* margin-top:20px; */
+    background: #27c5ff;
+}
+.card {
+    border: none;
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+    margin-bottom: 30px;
+}
+.w-60 {
+    width: 60px;
+}
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 10px;
+    font-weight: 600;
+}
+.social-links li a {
+    -webkit-border-radius: 50%;
+    background-color: rgba(89,206,181,.85);
+    border-radius: 50%;
+    color: #fff;
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    width: 30px;
+    font-size: 12px;
+}
+a {
+    color: #707070;
+}
+.container{
+    padding-top: 20px;
+}
+.float-right
+{
+    float: right;
+}
+    </style>
+</head>
+<body>
+    
+<div class="container">
+    {{forloop.counter00}}
+    {% for user in users %}
+        {% if forloop.counter0|divisibleby:4 %}
+        <div class="row">
+            {% endif %}
+            
+            <div class="col-md-6 col-xl-3">
+                <div class="card m-b-30">
+                    <div class="card-body row">
+                        <div class="col-6">
+                            <a href=""><img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" class="img-fluid rounded-circle w-60"></a>
+                        </div>
+                        <div class="col-6 card-title align-self-center mb-0">
+                            <h5>{{user.user_id}}</h5>
+                            <p class="m-0">{{ user.user_name }}</p>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Email : <a href="#">{{ user.email }}</a></li>
+                        <li class="list-group-item"><i class="fa fa-phone float-right"></i>Phone : {{ user.mobile }}</li>
+                    </ul>
+                    <div class="card-body">
+                        <div class="float-right btn-group btn-group-sm">
+                            {% comment %} <a href="#" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i> </a> {% endcomment %}
+                            <form action="/user/edit_user/" method="post">
+                                <button type="submit" name="edit_user_detail" value="{{ user.id }}" class="btn btn-primary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Edit"><i class="fa fa-pencil"></i></button>
+                            </form>
+                            <form action="/user/profile_view/" method="post">
+                            {% comment %} <a href="#" class="btn btn-secondary tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Delete"><i class="fa fa-eye"></i></a> {% endcomment %}
+                             <button type="submit" name="id" value="{{ user.id }}" class="btn btn-secondary tooltips" data-placement="top" data-original-title="View"><i class="fa fa-eye"></i></button>
+                            </form>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+           {% with r=forloop.counter0|sub:3 %}
+            {% if r|divisibleby:4 %}
+            </div>
+                {% endif %}
+                {% endwith %}
+        
+    {% endfor %}
+</div>
+</body>
+</html>
+{% endblock %}
